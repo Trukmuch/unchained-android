@@ -227,10 +227,7 @@
             android:minLines="3"
             android:visibility="@{torrent.status.equalsIgnoreCase(`downloaded`) ? View.VISIBLE : View.GONE}"
             android:layout_gravity="center_horizontal"
-            app:icon="@drawable/icon_download"
-            app:layout_constraintStart_toStartOf="@id/cvDetails"
-            app:layout_constraintEnd_toStartOf="@id/bCopy"
-            app:layout_constraintTop_toBottomOf="@id/cvDetails" />
+            app:icon="@drawable/icon_download" />
 
 
     </LinearLayout>
