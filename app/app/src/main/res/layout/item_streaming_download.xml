@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="kotlin.Pair" />
+
+        <variable
+            name="item"
+            type="Pair&lt;String,String>" />
+
+        <variable
+            name="listener"
+            type="com.github.livingwithhippos.unchained.downloaddetails.view.DownloadDetailsListener" />
+    </data>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            >
+
+            <TextView
+                android:id="@+id/tvTitle"
+                style="@style/TextAppearance.UnchainedTheme.Headline6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{item.first, default=`apple`}"
+                app:layout_constraintEnd_toStartOf="@+id/bOpen"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <ImageButton
+                android:id="@+id/bOpen"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:backgroundTint="@android:color/transparent"
+                android:contentDescription="@{@string/open_link_format(item.first)}"
+                android:onClick="@{()->listener.onOpenClick(item.second)}"
+                android:src="@drawable/icon_open_external"
+                android:tint="?attr/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/bCopy"
+                app:layout_constraintStart_toEndOf="@+id/tvTitle"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/bCopy"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:backgroundTint="@android:color/transparent"
+                android:contentDescription="@{@string/copy_link_format(item.first)}"
+                android:onClick="@{()->listener.onCopyClick(item.second)}"
+                android:src="@drawable/icon_copy"
+                android:tint="?attr/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/bOpenWith"
+                app:layout_constraintStart_toEndOf="@+id/bOpen"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/bOpenWith"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:backgroundTint="@android:color/transparent"
+                android:contentDescription="@{@string/open_with_format(item.first)}"
+                android:onClick="@{()->listener.onOpenWith(item.second)}"
+                android:src="@drawable/icon_remote"
+                android:tint="?attr/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/bCopy"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

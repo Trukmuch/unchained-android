@@ -435,4 +435,11 @@
     <string name="host_match_not_found">No matching host found. Refresh hosts from settings if needed.</string>
     <string name="refreshing_token">Refreshing authentication, please retry in a bit</string>
 	<string name="black_and_white">Black and white</string>
+    <string name="size">Size</string>
+    <string name="file_type">File type</string>
+    <string name="name">Name</string>
+    <string name="filename">File name</string>
+    <string name="type">Type</string>
+    <string name="alternative_links">Alternative links</string>
+    <string name="other">Other</string>
 </resources>

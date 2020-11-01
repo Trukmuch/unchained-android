@@ -165,5 +165,11 @@
         <item name="android:textColor">?attr/colorOnError</item>
     </style>
 
+    <style name="Widget.Unchained.CardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">10dp</item>
+        <item name="cardElevation">5dp</item>
+    </style>
+
+
 
 </resources>

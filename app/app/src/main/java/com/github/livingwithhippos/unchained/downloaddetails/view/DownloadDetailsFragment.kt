@@ -22,6 +22,7 @@ import com.github.livingwithhippos.unchained.base.UnchainedFragment
 import com.github.livingwithhippos.unchained.data.model.DownloadItem
 import com.github.livingwithhippos.unchained.databinding.FragmentDownloadDetailsBinding
 import com.github.livingwithhippos.unchained.downloaddetails.model.AlternativeDownloadAdapter
+import com.github.livingwithhippos.unchained.downloaddetails.model.StreamingAdapter
 import com.github.livingwithhippos.unchained.downloaddetails.viewmodel.DownloadDetailsViewModel
 import com.github.livingwithhippos.unchained.lists.view.ListsTabFragment
 import com.github.livingwithhippos.unchained.utilities.EventObserver
@@ -54,9 +55,15 @@ class DownloadDetailsFragment : UnchainedFragment(), DownloadDetailsListener {
         detailsBinding.yatseInstalled = isYatseInstalled()
 
         viewModel.streamLiveData.observe(viewLifecycleOwner, {
-            if (it != null) {
-                detailsBinding.stream = it
-            }
+            val streams = mutableListOf<Pair<String,String>>()
+            streams.add(Pair("apple",it.apple.link))
+            streams.add(Pair("dash",it.dash.link))
+            streams.add(Pair("liveMP4",it.liveMP4.link))
+            streams.add(Pair("h264WebM",it.h264WebM.link))
+            val streamingAdapter = StreamingAdapter(this)
+            detailsBinding.rvStreaming.adapter = streamingAdapter
+            streamingAdapter.submitList(streams)
+            detailsBinding.cvStreaming.visibility = View.VISIBLE
         })
 
 
@@ -79,6 +86,9 @@ class DownloadDetailsFragment : UnchainedFragment(), DownloadDetailsListener {
             if (bundle.getBoolean("deleteConfirmation"))
                 viewModel.deleteDownload(args.details.id)
         }
+
+        if (args.details.streamable == 1)
+            viewModel.fetchStreamingInfo(args.details.id)
 
         return detailsBinding.root
     }
@@ -150,21 +160,10 @@ class DownloadDetailsFragment : UnchainedFragment(), DownloadDetailsListener {
             ?.getInstalledPackages(PackageManager.GET_META_DATA)
             ?.firstOrNull { it.packageName == "org.leetzone.android.yatsewidgetfree" } != null
     }
-
-    override fun onLoadStreamsClick(id: String) {
-        lifecycleScope.launch {
-            if (activityViewModel.isTokenPrivate()) {
-                viewModel.fetchStreamingInfo(id)
-            } else
-                context?.showToast(R.string.api_needs_private_token)
-
-        }
-    }
 }
 
 interface DownloadDetailsListener {
     fun onCopyClick(text: String)
     fun onOpenClick(url: String)
     fun onOpenWith(url: String)
-    fun onLoadStreamsClick(id: String)
 }
