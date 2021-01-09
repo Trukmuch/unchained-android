@@ -14,11 +14,11 @@ if (keyPropertiesFile.exists()) {
 android {
 
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.github.livingwithhippos.unchained"
-        minSdkVersion 24
+        minSdkVersion 22
         targetSdkVersion 30
         versionCode 12
         versionName "2.7.9-beta"
