@@ -83,13 +83,15 @@ class MainActivity : AppCompatActivity() {
             setupBottomNavigationBar()
         } // Else, need to wait for onRestoreInstanceState
 
+        // add here destinations that do not need a back arrow on the top app bar
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.authentication_dest,
                 R.id.start_dest,
                 R.id.user_dest,
                 R.id.new_download_dest,
-                R.id.list_tabs_dest
+                R.id.list_tabs_dest,
+                R.id.search_dest,
             ),
             null
         )
@@ -100,7 +102,7 @@ class MainActivity : AppCompatActivity() {
                 // go to login fragment
                 AuthenticationState.UNAUTHENTICATED -> {
                     openAuthentication()
-                    disableBottomNavItems(R.id.navigation_new_download, R.id.navigation_lists)
+                    disableBottomNavItems(R.id.navigation_new_download, R.id.navigation_lists, R.id.navigation_search)
                     viewModel.setTokenRefreshing(false)
                 }
                 // refresh the token.
@@ -115,7 +117,7 @@ class MainActivity : AppCompatActivity() {
                 // go to login fragment and show another error message
                 AuthenticationState.ACCOUNT_LOCKED -> {
                     openAuthentication()
-                    disableBottomNavItems(R.id.navigation_new_download, R.id.navigation_lists)
+                    disableBottomNavItems(R.id.navigation_new_download, R.id.navigation_lists, R.id.navigation_search)
                     viewModel.setTokenRefreshing(false)
                 }
                 // do nothing
@@ -131,7 +133,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        disableBottomNavItems(R.id.navigation_new_download, R.id.navigation_lists)
+        disableBottomNavItems(R.id.navigation_new_download, R.id.navigation_lists, R.id.navigation_search)
         viewModel.fetchFirstWorkingCredentials()
 
         // check if the app has been opened by clicking on torrents/magnet on sharing links
@@ -339,7 +341,8 @@ class MainActivity : AppCompatActivity() {
         val navGraphIds = listOf(
             R.navigation.home_nav_graph,
             R.navigation.download_nav_graph,
-            R.navigation.lists_nav_graph
+            R.navigation.lists_nav_graph,
+            R.navigation.search_nav_graph
         )
 
         // Setup the bottom navigation view with a list of navigation graphs
